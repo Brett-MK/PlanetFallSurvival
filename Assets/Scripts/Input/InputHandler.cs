@@ -5,11 +5,13 @@ public class InputHandler : MonoBehaviour
 {
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameObject buildingUI;
+    [SerializeField] private BuildingUpgradeUI buildingUpgradeUI;
     [SerializeField] private InputActionReference clickAction;
     [SerializeField] private InputActionReference backAction;
 
     private Camera cam;
     private bool buildingOpen = false;
+    private Building currentBuilding;
 
     private void Awake()
     {
@@ -41,12 +43,14 @@ public class InputHandler : MonoBehaviour
         if (clickAction.action.WasPressedThisFrame())
         {
             Ray ray = cam.ScreenPointToRay(Pointer.current.position.ReadValue());
-
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 Building building = hit.collider.GetComponent<Building>();
                 if (building != null)
+                {
+                    currentBuilding = building;
                     OpenBuilding(hit.collider.bounds.center);
+                }
             }
         }
     }
@@ -55,7 +59,14 @@ public class InputHandler : MonoBehaviour
     {
         buildingOpen = true;
         cameraController.ZoomToBuilding(center);
-        if (buildingUI != null) buildingUI.SetActive(true);
+        if (buildingUI != null)
+        {
+            buildingUI.SetActive(true);
+            if (buildingUpgradeUI != null && currentBuilding != null)
+            {
+                buildingUpgradeUI.SetBuilding(currentBuilding);
+            }
+        }
     }
 
     private void CloseBuilding()
