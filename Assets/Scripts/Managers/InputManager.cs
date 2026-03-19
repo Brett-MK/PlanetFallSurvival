@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private BuildingManager buildingManager;
+    public event Action<Building, Vector3> OnBuildingSelected;
+    public event Action OnBackPressed;
 
     private InputSystem_Actions inputActions;
+    private bool _selectionActive;
 
     private void Awake()
     {
@@ -15,15 +18,18 @@ public class InputManager : MonoBehaviour
     private void OnEnable() => inputActions.Player.Enable();
     private void OnDisable() => inputActions.Player.Disable();
 
+    public void SetSelectionActive(bool active) => _selectionActive = active;
+
     private void Update()
     {
-        if (inputActions.Player.Back.WasPressedThisFrame() && buildingManager.IsOpen)
+        if (inputActions.Player.Back.WasPressedThisFrame() && _selectionActive)
         {
-            buildingManager.CloseBuilding();
+            _selectionActive = false;
+            OnBackPressed?.Invoke();
             return;
         }
 
-        if (buildingManager.IsOpen) return;
+        if (_selectionActive) return;
 
         if (inputActions.Player.Click.WasPressedThisFrame())
             TrySelectBuilding();
@@ -47,6 +53,7 @@ public class InputManager : MonoBehaviour
             center = bounds.center;
         }
 
-        buildingManager.OpenBuilding(building, center);
+        _selectionActive = true;
+        OnBuildingSelected?.Invoke(building, center);
     }
 }
