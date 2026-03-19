@@ -1,16 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputHandler : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     [SerializeField] private BuildingManager buildingManager;
 
-    private Camera cam;
     private InputSystem_Actions inputActions;
 
     private void Awake()
     {
-        cam = GetComponent<Camera>();
         inputActions = new InputSystem_Actions();
     }
 
@@ -33,7 +31,7 @@ public class InputHandler : MonoBehaviour
 
     private void TrySelectBuilding()
     {
-        Ray ray = cam.ScreenPointToRay(Pointer.current.position.ReadValue());
+        Ray ray = Camera.main.ScreenPointToRay(Pointer.current.position.ReadValue());
         if (!Physics.Raycast(ray, out RaycastHit hit)) return;
 
         if (!hit.collider.TryGetComponent(out Building building)) return;
