@@ -3,14 +3,10 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    [SerializeField] private CameraController cameraController;
-    [SerializeField] private GameObject buildingUI;
-    [SerializeField] private BuildingUpgradeUI buildingUpgradeUI;
+    [SerializeField] private BuildingManager buildingManager;
 
     private Camera cam;
     private InputSystem_Actions inputActions;
-    private bool buildingOpen;
-    private Building currentBuilding;
 
     private void Awake()
     {
@@ -23,57 +19,36 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
-        if (inputActions.Player.Back.WasPressedThisFrame() && buildingOpen)
+        if (inputActions.Player.Back.WasPressedThisFrame() && buildingManager.IsOpen)
         {
-            CloseBuilding();
+            buildingManager.CloseBuilding();
             return;
         }
 
-        if (buildingOpen) return;
+        if (buildingManager.IsOpen) return;
 
         if (inputActions.Player.Click.WasPressedThisFrame())
-        {
-            Ray ray = cam.ScreenPointToRay(Pointer.current.position.ReadValue());
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                Building building = hit.collider.GetComponent<Building>();
-                if (building != null)
-                {
-                    currentBuilding = building;
-
-                    Renderer[] renderers = building.GetComponentsInChildren<Renderer>();
-                    Vector3 center = building.transform.position;
-
-                    if (renderers.Length > 0)
-                    {
-                        Bounds bounds = renderers[0].bounds;
-                        foreach (Renderer renderer in renderers)
-                            bounds.Encapsulate(renderer.bounds);
-                        center = bounds.center;
-                    }
-
-                    OpenBuilding(center);
-                }
-            }
-        }
+            TrySelectBuilding();
     }
 
-    private void OpenBuilding(Vector3 center)
+    private void TrySelectBuilding()
     {
-        buildingOpen = true;
-        cameraController.ZoomToBuilding(center);
-        if (buildingUI != null)
-        {
-            buildingUI.SetActive(true);
-            if (buildingUpgradeUI != null && currentBuilding != null)
-                buildingUpgradeUI.SetBuilding(currentBuilding);
-        }
-    }
+        Ray ray = cam.ScreenPointToRay(Pointer.current.position.ReadValue());
+        if (!Physics.Raycast(ray, out RaycastHit hit)) return;
 
-    private void CloseBuilding()
-    {
-        buildingOpen = false;
-        cameraController.ZoomOut();
-        if (buildingUI != null) buildingUI.SetActive(false);
+        if (!hit.collider.TryGetComponent(out Building building)) return;
+
+        Renderer[] renderers = building.GetComponentsInChildren<Renderer>();
+        Vector3 center = building.transform.position;
+
+        if (renderers.Length > 0)
+        {
+            Bounds bounds = renderers[0].bounds;
+            foreach (Renderer r in renderers)
+                bounds.Encapsulate(r.bounds);
+            center = bounds.center;
+        }
+
+        buildingManager.OpenBuilding(building, center);
     }
 }

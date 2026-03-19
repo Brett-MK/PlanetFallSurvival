@@ -16,10 +16,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float minZoom = 5f;
     [SerializeField] private float maxZoom = 50f;
     [SerializeField] private float zoomSpeed = 20f;
-    [SerializeField] private float panSpeed = 1f;
     [SerializeField] private float smoothTime = 0.1f;
-    [SerializeField] private float zoomedInSize = 3f;
-    [SerializeField] private float zoomedInCameraHeight = 20f;
 
     private Camera cam;
     private Vector3 velocity;
@@ -155,7 +152,7 @@ public class CameraController : MonoBehaviour
         return ray.GetPoint(distance);
     }
 
-    public void ZoomToBuilding(Vector3 worldPosition)
+    public void ZoomToBuilding(Vector3 worldPosition, float zoomedInSize)
     {
         isZoomedToBuilding = true;
         isDragging = false;
