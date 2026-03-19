@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager Instance { get; private set; }
+
+
     public event Action<Building, Vector3> OnBuildingSelected;
     public event Action OnBackPressed;
 
@@ -12,13 +15,17 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         inputActions = new InputSystem_Actions();
     }
 
     private void OnEnable() => inputActions.Player.Enable();
     private void OnDisable() => inputActions.Player.Disable();
 
-    public void SetSelectionActive(bool active) => _selectionActive = active;
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
 
     private void Update()
     {

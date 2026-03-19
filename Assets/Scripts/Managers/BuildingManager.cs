@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
-    [SerializeField] private InputManager inputManager;
+    public static BuildingManager Instance { get; private set; }
+
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameObject buildingUI;
     [SerializeField] private BuildingUpgradeUI buildingUpgradeUI;
@@ -11,16 +12,26 @@ public class BuildingManager : MonoBehaviour
     public bool IsOpen { get; private set; }
     public Building CurrentBuilding { get; private set; }
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void OnEnable()
     {
-        inputManager.OnBuildingSelected += OpenBuilding;
-        inputManager.OnBackPressed += CloseBuilding;
+        InputManager.Instance.OnBuildingSelected += OpenBuilding;
+        InputManager.Instance.OnBackPressed += CloseBuilding;
     }
 
     private void OnDisable()
     {
-        inputManager.OnBuildingSelected -= OpenBuilding;
-        inputManager.OnBackPressed -= CloseBuilding;
+        InputManager.Instance.OnBuildingSelected -= OpenBuilding;
+        InputManager.Instance.OnBackPressed -= CloseBuilding;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
 
     private void OpenBuilding(Building building, Vector3 center)
