@@ -6,33 +6,24 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameObject buildingUI;
     [SerializeField] private BuildingUpgradeUI buildingUpgradeUI;
-    [SerializeField] private InputActionReference clickAction;
-    [SerializeField] private InputActionReference backAction;
 
     private Camera cam;
-    private bool buildingOpen = false;
+    private InputSystem_Actions inputActions;
+    private bool buildingOpen;
     private Building currentBuilding;
 
     private void Awake()
     {
         cam = GetComponent<Camera>();
+        inputActions = new InputSystem_Actions();
     }
 
-    private void OnEnable()
-    {
-        clickAction.action.Enable();
-        backAction.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        clickAction.action.Disable();
-        backAction.action.Disable();
-    }
+    private void OnEnable() => inputActions.Player.Enable();
+    private void OnDisable() => inputActions.Player.Disable();
 
     private void Update()
     {
-        if (backAction.action.WasPressedThisFrame() && buildingOpen)
+        if (inputActions.Player.Back.WasPressedThisFrame() && buildingOpen)
         {
             CloseBuilding();
             return;
@@ -40,7 +31,7 @@ public class InputHandler : MonoBehaviour
 
         if (buildingOpen) return;
 
-        if (clickAction.action.WasPressedThisFrame())
+        if (inputActions.Player.Click.WasPressedThisFrame())
         {
             Ray ray = cam.ScreenPointToRay(Pointer.current.position.ReadValue());
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -49,7 +40,19 @@ public class InputHandler : MonoBehaviour
                 if (building != null)
                 {
                     currentBuilding = building;
-                    OpenBuilding(hit.collider.bounds.center);
+
+                    Renderer[] renderers = building.GetComponentsInChildren<Renderer>();
+                    Vector3 center = building.transform.position;
+
+                    if (renderers.Length > 0)
+                    {
+                        Bounds bounds = renderers[0].bounds;
+                        foreach (Renderer renderer in renderers)
+                            bounds.Encapsulate(renderer.bounds);
+                        center = bounds.center;
+                    }
+
+                    OpenBuilding(center);
                 }
             }
         }
@@ -63,9 +66,7 @@ public class InputHandler : MonoBehaviour
         {
             buildingUI.SetActive(true);
             if (buildingUpgradeUI != null && currentBuilding != null)
-            {
                 buildingUpgradeUI.SetBuilding(currentBuilding);
-            }
         }
     }
 
