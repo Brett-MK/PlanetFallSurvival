@@ -48,10 +48,11 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    private void CloseBuilding()
+    public void CloseBuilding()
     {
         IsOpen = false;
         CurrentBuilding = null;
+        InputManager.Instance.ClearSelection();
         cameraController.ZoomOut();
 
         if (buildingUI != null)

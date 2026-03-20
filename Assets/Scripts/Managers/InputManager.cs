@@ -22,6 +22,8 @@ public class InputManager : MonoBehaviour
     private void OnEnable() => inputActions.Player.Enable();
     private void OnDisable() => inputActions.Player.Disable();
 
+    public void ClearSelection() => _selectionActive = false;
+
     private void OnDestroy()
     {
         if (Instance == this) Instance = null;

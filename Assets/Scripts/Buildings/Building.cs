@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    [SerializeField] private int currentLevel = 3;
+    [SerializeField] private int currentLevel = 1;
     [SerializeField] private Transform modelContainer;
 
     // Store child models for each level
@@ -28,13 +28,12 @@ public class Building : MonoBehaviour
         }
     }
 
-    public int GetCurrentLevel()
-    {
-        return currentLevel;
-    }
+    public int GetCurrentLevel() => currentLevel;
+    public bool IsMaxLevel => currentLevel >= levelModels.Length;
 
     public void UpgradeBuilding()
     {
+        if (IsMaxLevel) return;
         currentLevel++;
         UpdateModelDisplay();
     }

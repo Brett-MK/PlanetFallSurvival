@@ -34,20 +34,18 @@ public class BuildingUpgradeUI : MonoBehaviour
         if (currentBuilding == null) return;
 
         levelText.text = $"Level: {currentBuilding.GetCurrentLevel()}";
-        // You can add building name here if Building script tracks it
+        upgradeButton.interactable = !currentBuilding.IsMaxLevel;
     }
 
     private void OnUpgradeClicked()
     {
-        if (currentBuilding != null)
-        {
-            currentBuilding.UpgradeBuilding();
-            UpdateUI();
-        }
+        if (currentBuilding == null) return;
+        currentBuilding.UpgradeBuilding();
+        UpdateUI();
     }
 
     private void OnCloseClicked()
     {
-        gameObject.SetActive(false);
+        BuildingManager.Instance.CloseBuilding();
     }
 }
