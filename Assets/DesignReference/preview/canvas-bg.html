@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin: 0; padding: 18px; background: var(--space-void); font: var(--type-body-sm); color: var(--fg-2); }
+  .bg { width: 100%; height: 170px; border-radius: 14px; border: 1px solid rgba(139,108,255,.2); position: relative; overflow: hidden; }
+  .canvas { background: var(--grad-canvas); }
+  .stars { position: absolute; inset: 0; background-image:
+    radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent 50%),
+    radial-gradient(1px 1px at 82% 24%, #C6B8E8 50%, transparent 50%),
+    radial-gradient(1px 1px at 34% 62%, #fff 50%, transparent 50%),
+    radial-gradient(2px 2px at 68% 80%, #8B6CFF 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 44% 42%, #7BE89B 50%, transparent 50%),
+    radial-gradient(1px 1px at 22% 88%, #C6B8E8 50%, transparent 50%); opacity: .7; }
+  .vign { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(7,3,26,0.7) 100%); }
+  .lbl { position: absolute; bottom: 8px; left: 10px; font: 600 10px var(--font-mono); color: var(--fg-3); background: rgba(10,6,24,.6); padding: 3px 6px; border-radius: 6px; }
+</style></head>
+<body>
+  <div class="bg canvas">
+    <div class="stars"></div>
+    <div class="vign"></div>
+    <span class="lbl">--grad-canvas + starfield + vignette</span>
+  </div>
+</body></html>

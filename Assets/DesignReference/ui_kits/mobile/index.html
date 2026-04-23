@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Planetfall Survival — Mobile UI Kit</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    body { margin: 0; background: #05020F; min-height: 100vh;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, #fff 50%, transparent 50%),
+        radial-gradient(1px 1px at 80% 30%, #8B6CFF 50%, transparent 50%),
+        radial-gradient(1px 1px at 60% 70%, #C6B8E8 50%, transparent 50%),
+        radial-gradient(2px 2px at 30% 85%, #fff 50%, transparent 50%);
+      background-size: 400px 400px;
+    }
+    .pf-scene { position: absolute; inset: 0; display: grid; place-items: center; }
+    .pf-planet {
+      position: absolute; bottom: -120px; left: 50%;
+      width: 500px; height: 500px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle at 35% 30%, #4A3A8A 0%, #2A1B5E 40%, #0F0729 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 80px rgba(139,108,255,.35), inset 20px 10px 40px rgba(0,0,0,.6);
+    }
+    .pf-outpost { position: relative; z-index: 2; filter: drop-shadow(0 0 12px rgba(139,108,255,.5)); }
+    .pf-screen-picker {
+      position: fixed; top: 12px; left: 12px; z-index: 50;
+      display: flex; gap: 6px; flex-wrap: wrap;
+      background: rgba(10,6,24,0.85); padding: 8px; border-radius: 12px;
+      border: 1px solid rgba(139,108,255,0.35);
+    }
+    .pf-screen-picker button {
+      font: 700 11px/1 Barlow, system-ui; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 6px 10px; border-radius: 8px; cursor: pointer;
+      background: #241749; color: #C6B8E8; border: 1px solid rgba(139,108,255,0.35);
+    }
+    .pf-screen-picker button.active {
+      background: linear-gradient(180deg,#FFD066,#F59A2B); color: #3A1A00; border-color: #8F4E08;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <div id="root"></div>
+
+  <script type="text/babel" src="Icons.jsx"></script>
+  <script type="text/babel" src="Components.jsx"></script>
+  <script type="text/babel" src="BaseScreen.jsx"></script>
+  <script type="text/babel" src="Screens.jsx"></script>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    function App() {
+      const [screen, setScreen] = useState(() => localStorage.getItem('pf-screen') || 'base');
+      useEffect(() => localStorage.setItem('pf-screen', screen), [screen]);
+
+      const renderInner = () => {
+        switch(screen){
+          case 'heroes':   return <window.HeroesScreen/>;
+          case 'backpack': return <window.BackpackScreen/>;
+          case 'alliance': return <window.AllianceScreen/>;
+          case 'battle':   return <window.BattleScreen/>;
+          default:         return <BaseInner/>;
+        }
+      };
+
+      return (
+        <>
+          <div className="pf-screen-picker">
+            {['base','heroes','battle','backpack','alliance'].map(s => (
+              <button key={s} className={screen===s?'active':''} onClick={()=>setScreen(s)}>{s}</button>
+            ))}
+          </div>
+          <div className="pf-device">
+            <div className="pf-screen">
+              <div className="pf-notch" aria-hidden/>
+              <div className="pf-statusbar">
+                <span>9:41</span>
+                <div className="pf-statusbar-icons">
+                  <svg width="16" height="10" viewBox="0 0 16 10"><path d="M1 9h2V5H1zM5 9h2V3H5zM9 9h2V1H9zM13 9h2V0h-2z" fill="#F4EEFF"/></svg>
+                  <svg width="14" height="10" viewBox="0 0 14 10"><path d="M7 0a9 9 0 0 0-6.5 2.8L7 9.5l6.5-6.7A9 9 0 0 0 7 0Z" fill="#F4EEFF"/></svg>
+                  <svg width="22" height="10" viewBox="0 0 22 10">
+                    <rect x=".5" y=".5" width="18" height="9" rx="2" fill="none" stroke="#F4EEFF" opacity=".4"/>
+                    <rect x="2" y="2" width="13" height="6" rx="1" fill="#F4EEFF"/>
+                    <rect x="19" y="3" width="1.5" height="4" rx=".75" fill="#F4EEFF" opacity=".5"/>
+                  </svg>
+                </div>
+              </div>
+              {screen === 'base' && <>
+                <window.TopBar power={813126736}/>
+                <window.ResourceStrip time="UTC 03/09 · 03:42:52" vip={12} diamonds={35961} energy="652M"/>
+              </>}
+              {renderInner()}
+              <window.BottomNav active={screen} onChange={setScreen}/>
+            </div>
+          </div>
+        </>
+      );
+    }
+
+    // extract the Base inner content (canvas + floats) from BaseScreen
+    function BaseInner() {
+      return (
+        <window.Canvas>
+          <div className="pf-scene">
+            <div className="pf-planet" aria-hidden/>
+            <div className="pf-outpost" aria-hidden>
+              <svg viewBox="0 0 220 180" width="220" height="180">
+                <defs>
+                  <linearGradient id="domeG" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stopColor="#8B6CFF" stopOpacity=".55"/>
+                    <stop offset="1" stopColor="#2E1E5C" stopOpacity=".3"/>
+                  </linearGradient>
+                  <linearGradient id="hullG" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stopColor="#4A3A7A"/>
+                    <stop offset="1" stopColor="#1A0F3D"/>
+                  </linearGradient>
+                </defs>
+                <ellipse cx="110" cy="160" rx="100" ry="14" fill="#1A0F3D" opacity=".8"/>
+                <path d="M40 150 Q110 40 180 150 Z" fill="url(#domeG)" stroke="#8B6CFF" strokeWidth="1.5" opacity=".9"/>
+                <rect x="55" y="120" width="40" height="32" rx="4" fill="url(#hullG)" stroke="#8B6CFF"/>
+                <rect x="100" y="108" width="50" height="44" rx="5" fill="url(#hullG)" stroke="#8B6CFF"/>
+                <rect x="155" y="122" width="30" height="30" rx="3" fill="url(#hullG)" stroke="#8B6CFF"/>
+                <circle cx="72" cy="132" r="2" fill="#FFC24A"/><circle cx="82" cy="132" r="2" fill="#FFC24A"/>
+                <circle cx="120" cy="122" r="2" fill="#6DD5FF"/><circle cx="135" cy="122" r="2" fill="#6DD5FF"/>
+                <circle cx="165" cy="135" r="2" fill="#7BE89B"/><circle cx="175" cy="135" r="2" fill="#7BE89B"/>
+                <path d="M125 108 L125 75 M120 78 L130 78 M117 83 L133 83" stroke="#8B6CFF" strokeWidth="1.2" fill="none"/>
+                <circle cx="125" cy="72" r="2.5" fill="#FF5A6E"/>
+              </svg>
+            </div>
+          </div>
+          <div className="pf-float-group pf-float-group--left">
+            <button className="pf-float-btn"><window.I.Flame size={22} color="#FFC24A"/><span className="pf-float-btn-label">QUESTS</span></button>
+            <button className="pf-float-btn"><window.I.Bell size={22} color="#6DD5FF"/><span className="pf-float-btn-label">MAIL</span></button>
+          </div>
+          <div className="pf-float-group pf-float-group--right">
+            <button className="pf-float-btn"><window.I.Shield size={22} color="#7BE89B"/><span className="pf-float-btn-label">SHIELD</span></button>
+          </div>
+          <div className="pf-float-group pf-float-group--bottom">
+            <window.SecondaryButton size="sm">RESEARCH</window.SecondaryButton>
+            <window.PrimaryButton size="sm">RECRUIT</window.PrimaryButton>
+          </div>
+        </window.Canvas>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+  </script>
+</body>
+</html>

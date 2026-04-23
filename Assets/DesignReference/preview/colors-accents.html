@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin: 0; padding: 18px; background: var(--space-void); color: var(--fg-1); font: var(--type-body); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .sw { border-radius: 10px; height: 78px; display: flex; flex-direction: column; justify-content: flex-end; padding: 8px 10px; border: 1px solid rgba(255,255,255,0.06); }
+  .sw .name { font: 700 10px/1.1 var(--font-ui); letter-spacing: .06em; text-transform: uppercase; }
+  .sw .hex  { font: 600 10px/1.1 var(--font-mono); opacity: .8; }
+  h4 { margin: 0 0 8px; font: 700 10px/1 var(--font-ui); letter-spacing: .1em; color: var(--fg-3); }
+  .row { display: flex; gap: 6px; align-items: center; margin-top: 6px; font: 600 10px/1 var(--font-mono); color: var(--fg-3); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+</style></head>
+<body>
+  <h4>Accents — gold (primary), diamond, energy, plasma, danger</h4>
+  <div class="grid">
+    <div class="sw" style="background:linear-gradient(180deg,#FFD066,#F59A2B,#D87516); color:#3A1A00"><span class="name">Gold — CTA</span><span class="hex">#FFC24A → #D87516</span></div>
+    <div class="sw" style="background:linear-gradient(180deg,#8FE0FF,#2BA8E6); color:#002239"><span class="name">Diamond</span><span class="hex">#6DD5FF</span></div>
+    <div class="sw" style="background:linear-gradient(180deg,#A8F2C0,#2FB85F); color:#062817"><span class="name">Energy</span><span class="hex">#7BE89B</span></div>
+    <div class="sw" style="background:linear-gradient(180deg,#FF9BC9,#D93D8A); color:#3A0A22"><span class="name">Plasma</span><span class="hex">#FF7AB8</span></div>
+  </div>
+  <div class="row">
+    <span class="dot" style="color:#4BE28A;background:#4BE28A"></span>success #4BE28A
+    <span class="dot" style="color:#FFB547;background:#FFB547"></span>warn #FFB547
+    <span class="dot" style="color:#FF5A6E;background:#FF5A6E"></span>danger #FF5A6E
+    <span class="dot" style="color:#6DD5FF;background:#6DD5FF"></span>info #6DD5FF
+  </div>
+</body></html>

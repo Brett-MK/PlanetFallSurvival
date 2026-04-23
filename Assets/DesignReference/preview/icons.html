@@ -1,0 +1,32 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../ui_kits/mobile/styles.css"/>
+<style>
+  body { margin: 0; padding: 22px; background: var(--space-void); }
+  .row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+</style></head>
+<body>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<div id="r"></div>
+<script type="text/babel" src="../ui_kits/mobile/Icons.jsx"></script>
+<script type="text/babel">
+  const { Bolt, Cart, Gear, Diamond, Leaf, Compass, Hero, Sword, Backpack, Alliance, Globe, Plus, Chevron, Bell, Shield, Flame, Calendar } = window.I;
+  const items = [
+    ['Bolt', <Bolt color="#FFC24A"/>], ['Cart', <Cart color="#C6B8E8"/>], ['Gear', <Gear color="#C6B8E8"/>],
+    ['Calendar', <Calendar color="#8A7BB8"/>], ['Bell', <Bell color="#6DD5FF"/>], ['Shield', <Shield color="#7BE89B"/>], ['Flame', <Flame color="#FFC24A"/>],
+    ['Diamond', <Diamond/>], ['Leaf', <Leaf/>],
+    ['Compass', <Compass color="#F4EEFF"/>], ['Hero', <Hero color="#C6B8E8"/>], ['Sword', <Sword color="#C6B8E8"/>],
+    ['Backpack', <Backpack color="#C6B8E8"/>], ['Alliance', <Alliance color="#C6B8E8"/>], ['Globe', <Globe color="#C6B8E8"/>]
+  ];
+  ReactDOM.createRoot(document.getElementById('r')).render(
+    <div className="row">{items.map(([n,el])=>
+      <div key={n} style={{display:'flex', flexDirection:'column', alignItems:'center', gap: 6, width: 54}}>
+        <div style={{width:44,height:44,display:'grid',placeItems:'center',background:'var(--grad-panel-raised)',border:'var(--border-panel)',borderRadius:12,boxShadow:'var(--shadow-raised)'}}>{el}</div>
+        <span style={{font:'600 9px var(--font-ui)',letterSpacing:'.08em',textTransform:'uppercase',color:'var(--fg-3)'}}>{n}</span>
+      </div>
+    )}</div>
+  );
+</script>
+</body></html>

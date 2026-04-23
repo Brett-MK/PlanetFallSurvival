@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin: 0; padding: 18px; background: var(--space-void); color: var(--fg-1); font: var(--type-body); }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .sw { border-radius: 10px; height: 72px; display: flex; flex-direction: column; justify-content: flex-end; padding: 8px 10px; border: 1px solid rgba(255,255,255,0.06); position: relative; overflow: hidden; }
+  .sw .name { font: 700 10px/1.1 var(--font-ui); letter-spacing: .06em; text-transform: uppercase; }
+  .sw .hex  { font: 600 10px/1.1 var(--font-mono); opacity: .7; }
+  .sw.dark .name, .sw.dark .hex { color: #F4EEFF; }
+  .sw.light .name, .sw.light .hex { color: #0A0618; }
+  h4 { margin: 0 0 8px; font: 700 10px/1 var(--font-ui); letter-spacing: .1em; color: var(--fg-3); }
+</style></head>
+<body>
+  <h4>Deep space (canvas, chrome)</h4>
+  <div class="grid">
+    <div class="sw dark" style="background:#0A0618"><span class="name">Void</span><span class="hex">#0A0618</span></div>
+    <div class="sw dark" style="background:#120A28"><span class="name">Abyss</span><span class="hex">#120A28</span></div>
+    <div class="sw dark" style="background:#1B1138"><span class="name">Nebula</span><span class="hex">#1B1138</span></div>
+    <div class="sw dark" style="background:#241749"><span class="name">Plum</span><span class="hex">#241749</span></div>
+    <div class="sw dark" style="background:#2E1E5C"><span class="name">Twilight</span><span class="hex">#2E1E5C</span></div>
+    <div class="sw dark" style="background:#3A2876"><span class="name">Horizon</span><span class="hex">#3A2876</span></div>
+    <div class="sw light" style="background:#5B3FD9"><span class="name">Glow</span><span class="hex">#5B3FD9</span></div>
+    <div class="sw light" style="background:#8B6CFF"><span class="name">Beam</span><span class="hex">#8B6CFF</span></div>
+    <div class="sw light" style="background:#C6B8E8"><span class="name">fg-2</span><span class="hex">#C6B8E8</span></div>
+    <div class="sw light" style="background:#F4EEFF"><span class="name">fg-1</span><span class="hex">#F4EEFF</span></div>
+  </div>
+</body></html>

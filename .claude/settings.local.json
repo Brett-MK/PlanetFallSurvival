@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"c:/Users/brett/PlanetFallSurvival/Assets/PlanetfallSurvival/Scripts/Data\")",
+      "Bash(mkdir -p \"c:/Users/brett/PlanetFallSurvival/Assets/PlanetfallSurvival/Scripts/Managers\")"
+    ]
+  }
+}

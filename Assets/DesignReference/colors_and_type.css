@@ -1,0 +1,173 @@
+/* =========================================================
+   Planetfall Survival — Design Tokens
+   Sci-fi colony survival mobile game.
+   Deep-space purple/plum palette, gold accents,
+   layout patterns borrowed from the strategy-game genre.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  /* ---------- CORE PALETTE — Deep Space ---------- */
+  --space-void:      #0A0618;
+  --space-abyss:     #120A28;
+  --space-nebula:    #1B1138;
+  --space-plum:      #241749;
+  --space-twilight:  #2E1E5C;
+  --space-horizon:   #3A2876;
+  --space-glow:      #5B3FD9;
+  --space-beam:      #8B6CFF;
+
+  /* Chrome fills (raised bright panels over canvas) */
+  --panel-fill:      #241749;
+  --panel-fill-hi:   #2E1E5C;
+  --panel-fill-row:  #1B1138;
+
+  /* ---------- FOREGROUND ---------- */
+  --fg-1:            #F4EEFF;
+  --fg-2:            #C6B8E8;
+  --fg-3:            #8A7BB8;
+  --fg-4:            #574A85;
+
+  /* ---------- BRAND ACCENTS ---------- */
+  --gold-1:          #FFC24A;
+  --gold-2:          #F59A2B;
+  --gold-3:          #D87516;
+  --gold-border:     #8F4E08;
+
+  /* ---------- RESOURCE / SEMANTIC ---------- */
+  --diamond-1:       #6DD5FF;
+  --diamond-2:       #2BA8E6;
+  --energy-1:        #7BE89B;
+  --energy-2:        #2FB85F;
+  --plasma-1:        #FF7AB8;
+  --plasma-2:        #D93D8A;
+  --success:         #4BE28A;
+  --warn:            #FFB547;
+  --danger:          #FF5A6E;
+  --danger-2:        #D9253E;
+  --info:            #6DD5FF;
+
+  /* ---------- RARITY (loot cell tints; purple-centric palette) ---------- */
+  --rare-common-1:   #6E79A0;   --rare-common-2:   #3A4468;
+  --rare-rare-1:     #6DA8E6;   --rare-rare-2:     #2B5CA8;    /* blue */
+  --rare-epic-1:     #B084F0;   --rare-epic-2:     #6B3FB5;    /* violet */
+  --rare-legend-1:   #FFC24A;   --rare-legend-2:   #C4751A;    /* gold */
+  --rare-myth-1:     #FF7AB8;   --rare-myth-2:     #8B1E5C;    /* magenta */
+  --rare-energy-1:   #7BE89B;   --rare-energy-2:   #1F7A3F;    /* green */
+
+  /* ---------- GRADIENTS ---------- */
+  --grad-canvas:       radial-gradient(ellipse at 30% 20%, #2A1B5E 0%, #150A32 55%, #07031A 100%);
+  --grad-screen:       linear-gradient(180deg, #150A32 0%, #0A0618 100%);
+  --grad-panel:        linear-gradient(180deg, #261852 0%, #1A0F3D 100%);
+  --grad-panel-hi:     linear-gradient(180deg, #32206B 0%, #1F1348 100%);
+  --grad-gold:         linear-gradient(180deg, #FFD066 0%, #F59A2B 55%, #D87516 100%);
+  --grad-gold-press:   linear-gradient(180deg, #E8A42C 0%, #C87610 100%);
+  --grad-vip:          linear-gradient(180deg, #FFB547 0%, #E8751C 100%);
+  --grad-diamond:      linear-gradient(180deg, #8FE0FF 0%, #2BA8E6 100%);
+  --grad-energy:       linear-gradient(180deg, #A8F2C0 0%, #2FB85F 100%);
+  --grad-active-tab:   linear-gradient(180deg, #8B6CFF 0%, #5B3FD9 100%);
+
+  /* Cell gradients — rarity */
+  --grad-cell-common:  linear-gradient(180deg, #6E79A0 0%, #3A4468 100%);
+  --grad-cell-rare:    linear-gradient(180deg, #6DA8E6 0%, #2B5CA8 100%);
+  --grad-cell-epic:    linear-gradient(180deg, #B084F0 0%, #6B3FB5 100%);
+  --grad-cell-legend:  linear-gradient(180deg, #FFC24A 0%, #C4751A 100%);
+  --grad-cell-myth:    linear-gradient(180deg, #FF7AB8 0%, #8B1E5C 100%);
+  --grad-cell-energy:  linear-gradient(180deg, #7BE89B 0%, #1F7A3F 100%);
+
+  /* Hero card (genre-standard — large portrait cell) */
+  --grad-hero-card:    linear-gradient(180deg, #3A2876 0%, #1F1348 100%);
+
+  /* ---------- BORDERS ---------- */
+  --border-thin:       1px solid rgba(139, 108, 255, 0.18);
+  --border-panel:      1px solid rgba(139, 108, 255, 0.35);
+  --border-raised:     1px solid rgba(198, 184, 232, 0.28);
+  --border-gold:       1px solid rgba(255, 194, 74, 0.55);
+
+  /* ---------- SHADOWS / GLOWS ---------- */
+  --shadow-panel:      0 2px 0 rgba(0,0,0,0.35) inset,
+                       0 1px 0 rgba(255,255,255,0.06) inset,
+                       0 6px 18px rgba(0,0,0,0.45);
+  --shadow-raised:     0 1px 0 rgba(255,255,255,0.10) inset,
+                       0 -2px 0 rgba(0,0,0,0.30) inset,
+                       0 4px 12px rgba(0,0,0,0.55);
+  --shadow-button:     0 1px 0 rgba(255,255,255,0.18) inset,
+                       0 -3px 0 rgba(10,5,30,0.55) inset,
+                       0 3px 0 rgba(5,2,20,0.6),
+                       0 4px 10px rgba(0,0,0,0.45);
+  --shadow-gold:       0 1px 0 rgba(255,255,255,0.5) inset,
+                       0 -3px 0 rgba(140,60,0,0.7) inset,
+                       0 3px 0 rgba(100,40,0,0.55),
+                       0 4px 10px rgba(216,117,22,0.45),
+                       0 0 18px rgba(255,194,74,0.22);
+  --shadow-cell:       0 1px 0 rgba(255,255,255,0.25) inset,
+                       0 -3px 0 rgba(0,0,0,0.25) inset,
+                       0 2px 0 rgba(0,0,0,0.45),
+                       0 3px 6px rgba(0,0,0,0.35);
+  --shadow-active-tab: 0 0 24px rgba(139, 108, 255, 0.55),
+                       0 1px 0 rgba(255,255,255,0.20) inset;
+  --glow-diamond:      0 0 10px rgba(109, 213, 255, 0.55);
+  --glow-energy:       0 0 10px rgba(123, 232, 155, 0.55);
+  --glow-danger:       0 0 10px rgba(255, 90, 110, 0.65);
+  --glow-beam:         0 0 12px rgba(139, 108, 255, 0.6);
+
+  /* ---------- RADII ---------- */
+  --r-xs:  4px;
+  --r-sm:  8px;
+  --r-md:  12px;
+  --r-lg:  16px;
+  --r-xl:  22px;
+  --r-pill: 999px;
+
+  /* ---------- SPACING ---------- */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+
+  /* ---------- TYPE ---------- */
+  --font-display:  'Orbitron', 'Eurostile', system-ui, sans-serif;
+  --font-ui:       'Barlow', system-ui, -apple-system, sans-serif;
+  --font-body:     'Barlow', system-ui, -apple-system, sans-serif;
+  --font-mono:     ui-monospace, monospace;
+
+  /* Orbitron — stats, big numerals, branded labels */
+  --type-stat-lg:   800 22px/1.0 var(--font-display);
+  --type-stat-md:   700 16px/1.0 var(--font-display);
+  --type-stat-sm:   700 13px/1.0 var(--font-display);
+  --type-brand:     800 20px/1.1 var(--font-display);
+
+  /* Barlow — all screen UI: titles, buttons, tabs, nav, body */
+  --type-screen-title: 800 22px/1.15 var(--font-ui);
+  --type-button:       700 15px/1 var(--font-ui);
+  --type-label:        600 13px/1.1 var(--font-ui);
+  --type-tab:          700 14px/1.1 var(--font-ui);
+  --type-nav:          700 11px/1.1 var(--font-ui);
+  --type-body:         500 14px/1.45 var(--font-body);
+  --type-body-sm:      500 12px/1.4 var(--font-body);
+
+  --track-caps:  0.06em;
+  --track-tight: -0.01em;
+}
+
+/* ============ Semantic base ============ */
+html, body {
+  background: var(--space-void);
+  color: var(--fg-1);
+  font: var(--type-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 { font: var(--type-screen-title); color: var(--fg-1); margin: 0; }
+h2 { font: 700 18px/1.2 var(--font-ui); color: var(--fg-1); margin: 0; }
+h3 { font: 700 15px/1.2 var(--font-ui); color: var(--fg-1); margin: 0; }
+h4 { font: 600 13px/1.2 var(--font-ui); color: var(--fg-2); letter-spacing: var(--track-caps); margin: 0; }
+p  { font: var(--type-body); color: var(--fg-2); margin: 0; }
+small, .caption { font: var(--type-body-sm); color: var(--fg-3); }
+.stat   { font: var(--type-stat-lg); color: var(--fg-1); }
+.label  { font: var(--type-label); color: var(--fg-2); letter-spacing: var(--track-caps); text-transform: uppercase; }
+.mono   { font-family: var(--font-mono); }
